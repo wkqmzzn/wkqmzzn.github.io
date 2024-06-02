@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      *{
+          margin: 10px;
+          text-align: center;
+      }
+      header{
+          border: 2px solid rgb(247, 0, 255);
+          height: 15%;
+          font-size: 1.66em;
+      }
+      main{
+          border: 2px solid rgb(241, 120, 245);
+          height: 70%;
+          font-size: 1.2em;
+          overflow: auto; /* 添加滚动条，防止内容过多时溢出 */
+      }
+      nav{
+          border: 2px solid #b09cd5;
+          height: 10%;
+      }
+      nav button{
+          font-size: 1.1em;
+      }
+      footer{
+          border: 2px solid rgb(238, 148, 231);
+          height: 8%;
+      }
+  </style>
+    <title>移动互联时代的响应式设计（窄屏）</title>
+</head>
+<body>
+    <header>
+        <p id="book">
+            傲慢与偏见
+        </p>
+    </header>
+    <nav>
+        <button onclick="changeContent('prev')">向前</button>
+        <button onclick="changeContent('next')">向后</button>
+    </nav>
+    <main id="main">
+        <p id="content">
+            点击向前或向后查看详情
+        </p>
+    </main>
+    <footer>
+        <p id="statusInfo">
+            俞嘉美 @ 江西科技师范大学 2025
+        </p>
+    </footer>
+    <script>
+        var UI = {};
+        UI.appWidth = window.innerWidth > 600 ? 600 : window.innerWidth;
+        UI.appHeight = window.innerHeight;
+        const LETTERS = 35;
+        const baseFont = UI.appWidth / LETTERS;
+
+        document.body.style.fontSize = baseFont + "px";
+        document.body.style.width = UI.appWidth - 4* baseFont + "px";
+        document.body.style.height = UI.appHeight -10 * baseFont + "px";
+
+        // 假设的内容段落数组
+        var contentParagraphs = [
+            "《傲慢与偏见》是英国作家简·奥斯汀于1813年出版的一部经典小说。这部小说以19世纪英国上层社会为背景，讲述了女主角伊丽莎白·班内特与富有但自大的达西先生之间的爱情故事。故事开始时，班内特家五个姐妹中的长女珍和宠儿们的母亲都希望她们能够嫁给有钱人，以改善家庭状况。然而，聪明机智且有主见的伊丽莎白并不愿意因为金钱而妥协自己的幸福。她不被达西的高傲态度所动摇，并对他抱有偏见。随着故事的发展，伊丽莎白逐渐认识到自己的偏见，并得知了达西的真实情况。他原来并非如表面上那般傲慢，反而是一个善良、正直和谦虚的人。最终，两人克服了彼此间的误解与困难，相互坦诚相待，走到了一起。",
+            "《傲慢与偏见》展示了早期19世纪社会的等级观念和婚姻观念，并深入探讨了人性的复杂性和成长的重要性。这部小说以生动的人物形象、精致的语言和幽默风趣的对话而闻名，被誉为英国文学的经典之作，深受读者欢迎。"
+        ];
+
+        var currentPage = 0; // 当前显示的页面索引
+
+        // 添加改变内容的函数
+        function changeContent(direction) {
+            var content = document.getElementById('content');
+            var contentLength = contentParagraphs.length;
+
+            if (direction === 'prev') { // 向前翻页
+                if (currentPage > 0) {
+                    currentPage--;
+                } else {
+                  currentPage=contentParagraphs.length-1;
+                    alert("已经是第一页了！接下来将翻转到最后一页");
+                }
+            } else if (direction === 'next') { // 向后翻页
+                if (currentPage < contentLength - 1) {
+                    currentPage++;
+                } else {
+                   currentPage=0;
+                    alert("已经是最后一页了！接下来将翻转到第一页");
+                   
+                }
+            } else {
+                alert("未知的操作！");
+                return;
+            }
+
+            // 更新显示内容
+            content.textContent = contentParagraphs[currentPage];
+        }
+
+        // 初始化内容显示第一页
+        changeContent('next'); // 假设第一页通过点击“向后”按钮来加载
+    </script>
+</body>
+</html>
