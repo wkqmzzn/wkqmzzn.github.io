@@ -2,7 +2,7 @@
 <html lang="en">
    <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width , initial-scale=1">
+  <meta name="viewport" content="width=device-width , initial-scale=1, user-scalable=no">
   <title>响应式设计（宽屏和窄屏）</title>
  
 <style>
@@ -48,12 +48,18 @@
     background-color: blanchedalmond;
     margin:auto;
   }
+  #bookimg{
+    width: 100%;
+    height:100%;
+    object-fit:cover;
+    margin: 0% 0%;
+  }
 </style>
 </head> 
 <body >
   <header>
     <p id="book">
-     《我的毕设题目》
+     傲慢与偏见
     </p>
    </header>
   <nav>
@@ -65,13 +71,13 @@
 
    <main id="main">
 	<div id="bookface">
-        书的封面图
+        <img src="0.jpg" alt="傲慢与偏见"  id="bookimg">
     </div>
    </main>
 
   <footer> 
    
-	CopyRight  XXX 江西科技师范大学 2024--2025
+    俞嘉美 @ 江西科技师范大学 2025
 
   </footer> 
   <div id="aid">
