@@ -1,0 +1,23 @@
+[33mcommit d5cd5c9d0b92bb8a28cc495449ef3797fdadff06[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: YUJM <YUJM@163.com>
+Date:   Sun Jun 16 22:18:18 2024 +0800
+
+    项目第二版：响应式设计的概要开发
+
+[33mcommit 2414eac3abb9dfb41cb82f3fd50908f91996575c[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: YUJM <YUJM@163.com>
+Date:   Sun Jun 2 13:39:58 2024 +0800
+
+    页面利用CSS的流式布局和媒体查询技术，确保在不同屏幕尺寸下都能保持良好的展示效果。JavaScript通过定义UI对象来动态调整页面尺寸和字体大小，实现真正的响应式设计。同时，对象存储了鼠标状态信息，并通过事件监听器捕捉鼠标行为，如按下、移动和离开，将状态更新到页面上。
+
+[33mcommit fd9f0843c172421cf24bc7ab23047d2e78772b88[m
+Author: YUJM <YUJM@163.com>
+Date:   Sun Jun 2 13:20:32 2024 +0800
+
+    项目第二版窄屏代码实现：在实现响应式变化的基础上，增添了点击切换功能。与上一阶段比较，本阶段初次引入了em和'%'，这是CSS语言中比较高阶的语法，可以有效地实现我们的响应式设计。
+
+[33mcommit cb1caa7db3821b22b969622b69436c23c5ab5fc8[m
+Author: YUJM <YUJM@163.com>
+Date:   Sun Jun 2 13:17:10 2024 +0800
+
+    项目第一版：“三段论”式的内容设计概要开发

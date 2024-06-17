@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>《傲慢与偏见》——爱情与偏见的交织</title>
+  <style>
+    * {
+      margin: 10px;
+      text-align: center;
+    }
+
+    header {
+      border: 3px solid green;
+      height: 10%;
+      font-size: 1em;
+    }
+
+    nav {
+      border: 3px solid green;
+      height: 10%;
+    }
+
+    main {
+      border: 3px solid green;
+      height: 70%;
+      font-size: 0.8em;
+      position: relative;
+    }
+
+    footer {
+      border: 3px solid green;
+      height: 10%;
+      font-size: 0.7em;
+    }
+
+    body {
+      position: relative;
+    }
+
+    button {
+      font-size: 1em;
+    }
+
+    #bookface {
+  position: relative;
+  overflow: hidden;
+  width: 80%;
+  height: 50vh; /* 设置视口高度 */
+  user-select:none;
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 1em;
+  transition: transform 0.3s ease; /* 添加过渡效果 */
+}
+
+.left-page {
+  transform: translateX(0);
+  background-color: #f2f2f2;
+}
+
+.right-page {
+  transform: translateX(100%);
+  background-color: #ddd;
+}
+
+    #aid {
+      position: absolute;
+      border: 3px solid blue;
+      top: 0px;
+      left: 600px;
+    }
+
+    #typeText {
+      border: 1px solid blue;
+      padding: 0.3em;
+      color: gray;
+    }
+
+    #keyStatus {
+      position: absolute;
+      border: 1px solid blue;
+      width: 90%;
+      right: 0;
+      bottom: 0;
+      font-size: 0.6em;
+      padding: 0.5em;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <p id="book">
+      《傲慢与偏见》
+    </p>
+  </header>
+  <nav>
+    <button>了解更多</button>
+    <button>购买</button>
+    <button>其他</button>
+  </nav>
+
+  <main id="main">
+    <div id="bookface">
+      <div class="page left-page">《傲慢与偏见》是英国女小说家简·奥斯汀的创作的长篇小说。小说描写了小乡绅班纳特五个待字闺中的千金，主角是二女儿伊丽莎白。她在舞会上认识了达西，但是耳闻他为人傲慢，一直对他心生排斥，经历一番周折，伊丽莎白解除了对达西的偏见，达西也放下傲慢，有情人终成眷属。</div>
+      <div class="page right-page">《傲慢与偏见》人物介绍：<br />伊丽莎白：聪明机智，有主见，对达西的傲慢态度不满。<br />达西：富有绅士，英俊傲慢，对伊丽莎白一见钟情。<br />简：班纳特家的大女儿，美丽温柔，与宾利相互倾心。<br />宾利：富有绅士，达西的朋友，对简一见钟情并追求她。<br />威克姆：英俊的年轻人，自私虚伪，曾欺骗伊丽莎白的感情。<br />夏洛特：伊丽莎白的好友，聪明务实，为生活稳定嫁给柯林斯。<br />柯林斯：自负谄媚，追求伊丽莎白被拒，后娶夏洛特为妻。</div>
+    </div>
+  </main>
+
+  <footer>
+    Copyright 俞嘉美 江西科技师范大学 2024--2025
+  </footer>
+  <div id="aid">
+    用户键盘响应区
+    <p id="typeText"></p>
+    <p id="keyStatus"></p>
+  </div>
+  <script>
+    // 获取bookface元素和页面元素
+    const bookface = document.getElementById('bookface');
+    const leftPage = bookface.querySelector('.left-page');
+    const rightPage = bookface.querySelector('.right-page');
+    const textLeft = "";
+    const textRight = "";
+
+
+    var UI = {};
+  if(window.innerWidth>600){
+    UI.appWidth=600;
+      }else{
+    UI.appWidth = window.innerWidth;
+  }
+
+
+  UI.appHeight = window.innerHeight; 
+
+  let baseFont = UI.appWidth /20;
+  //通过改变body对象的字体大小，这个属性可以影响其后代
+  document.body.style.fontSize = baseFont +"px";
+  //通过把body的高度设置为设备屏幕的高度，从而实现纵向全屏
+  //通过CSS对子对象百分比（纵向）的配合，从而达到我们响应式设计的目标
+  document.body.style.width = UI.appWidth - baseFont + "px";
+  document.body.style.height = UI.appHeight - baseFont*5 + "px";
+if(window.innerWidth<1000){
+    $("aid").style.display='none';
+}
+  $("aid").style.width=window.innerWidth-UI.appWidth - baseFont*3 +'px';
+  $("aid").style.height= UI.appHeight - baseFont*3 +'px';
+
+    let startX; // 初始X坐标
+    let currentPage = 'left'; // 当前显示的页面：'left' 或 'right'
+    let isDragging = false; // 是否正在拖动
+
+    // 添加鼠标按下事件监听器
+    bookface.addEventListener('mousedown', (e) => {
+      startX = e.pageX;
+      isDragging = true;
+    });
+
+    // 添加鼠标移动事件监听器
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const deltaX = e.pageX - startX; // 计算鼠标移动的距离
+        if (deltaX > 0) {
+          // 向右拖动
+          if (currentPage === 'left') {
+            leftPage.style.transform = `translateX(-${deltaX}px)`;
+            rightPage.style.transform = `translateX(100% - ${deltaX}px)`;
+          }
+        } else {
+          // 向左拖动
+          if (currentPage === 'right') {
+            leftPage.style.transform = `translateX(-${Math.abs(deltaX)}px)`;
+            rightPage.style.transform = `translateX(100% + ${Math.abs(deltaX)}px)`;
+          }
+        }
+      }
+    });
+
+    // 添加鼠标松开事件监听器
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      if (currentPage === 'left' && leftPage.getBoundingClientRect().left < 0) {
+        // 切换到右页面
+        leftPage.style.transform = 'translateX(100%)';
+        rightPage.style.transform = 'translateX(0)';
+        currentPage = 'right';
+      } else if (currentPage === 'right' && rightPage.getBoundingClientRect().right > window.innerWidth) {
+        // 切换到左页面
+        leftPage.style.transform = 'translateX(0)';
+        rightPage.style.transform = 'translateX(100%)';
+        currentPage = 'left';
+      } else {
+        // 重置页面位置
+        leftPage.style.transform = 'translateX(0)';
+        rightPage.style.transform = 'translateX(100%)';
+      }
+    });
+
+    // 添加触摸事件监听器（如果需要支持移动设备）
+    bookface.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      startX = touch.pageX;
+      isDragging = true;
+    });
+
+    // 添加触摸移动事件监听器
+    window.addEventListener('touchmove', (e) => {
+      const deltaX = e.touches[0].pageX - startX; // 计算触摸移动的距离
+      if (deltaX > 0) {
+        // 向右拖动
+        if (currentPage === 'left') {
+          leftPage.style.transform = `translateX(-${deltaX}px)`;
+          rightPage.style.transform = `translateX(100% - ${deltaX}px)`;
+        }
+      } else {
+        // 向左拖动
+        if (currentPage === 'right') {
+          leftPage.style.transform = `translateX(-${Math.abs(deltaX)}px)`;
+          rightPage.style.transform = `translateX(100% + ${Math.abs(deltaX)}px)`;
+        }
+      }
+    });
+
+    // 添加触摸结束事件监听器
+// JavaScript
+if (currentPage === 'left' && leftPage.getBoundingClientRect().left < 0) {
+  // 切换到右页面
+  leftPage.classList.add('right-page');
+  rightPage.classList.remove('right-page');
+  rightPage.classList.add('left-page');
+  currentPage = 'right';
+} else if (currentPage === 'right' && rightPage.getBoundingClientRect().right > window.innerWidth) {
+  // 切换到左页面
+  leftPage.classList.remove('right-page');
+  leftPage.classList.add('left-page');
+  rightPage.classList.add('right-page');
+  currentPage = 'left';
+} else {
+  // 重置页面位置
+  leftPage.classList.add('left-page');
+  rightPage.classList.add('right-page');
+}
+
+    // 定义一个函数printLetter，用于按指定速度在元素中打印字符串
+    // 参数：str - 要打印的字符串；el - 要打印字符串的元素；speed - 打印速度（毫秒）；callback - 打印完成后执行的回调函数
+    function printLetter(str, el, speed, callback) {
+      el.textContent = "";
+      var i = 0;
+      var timer = setInterval(function () {
+        if (i < str.length) {
+          // 将字符串的字符逐个添加到元素的textContent中
+          el.textContent += str.charAt(i);
+          i++;
+        } else {
+          // 打印完成，清除定时器
+          clearInterval(timer);
+          // 如果提供了回调函数，则执行回调函数
+          if (callback) {
+            callback();
+          }
+        }
+      }, speed);
+    }
+
+    // 获取该元素的textContent
+    var text = bookface.textContent;
+
+    printLetter(textLeft, leftPage, 50, function () {
+      console.log('左页面打印完成');
+    });
+    printLetter(textRight, rightPage, 50, function () {
+      console.log('右页面打印完成');
+    });
+    document.body.addEventListener("keydown", function(ev) {
+    ev.preventDefault();
+    let k = ev.key;
+    let c = ev.keyCode;
+    document.getElementById('keyStatus').textContent = "您已按键 ：" + k + " ，字符编码 ：" + c;
+  });
+
+  document.body.addEventListener("keyup", function(ev) {
+    ev.preventDefault();
+    let key = ev.key;
+    let code = ev.keyCode;
+    document.getElementById('keyStatus').textContent = "松开按键 ：" + key + " ，字符编码 ：" + code;
+    if (printLetter(key)) {
+      document.getElementById('typeText').textContent += key;
+    }
+  });
+    function printLetter(k){
+	 if (k.length > 1){ //学生必须研究这个逻辑的作用
+		 return false ;
+	 }
+	 let puncs = ['~','`','!','@','#','$','%','^','&','*','(',')','-','_','+','=',',','.','<','>','?','/',' '] ;
+     if ( (k >= 'a' && k <= 'z')|| (k >= 'A' && k <= 'Z')|| (k >= '0' && k <= '9'))  {
+		 console.log("letters") ;
+		 return true ;
+     }
+	 for (let p of puncs ){
+	  if (p === k) {
+		   console.log("puncs") ;
+          return true ;
+		 }
+	 }
+	 return false ;
+      //提出更高阶的问题，如何处理连续空格和制表键tab？
+	}	//function printLetter(k)
+;
+ //Code Block  End
+ function $(ele) {
+  if (typeof ele !== 'string') {
+    throw("自定义的$函数参数的数据类型错误，实参必须是字符串！");
+    return;
+  }
+  let dom = document.getElementById(ele);
+  if (dom) {
+    return dom;
+  } else {
+    dom = document.querySelector(ele);
+    if (dom) {
+      return dom;
+    } else {
+      throw("执行$函数未能在页面上获取任何元素，请自查问题！");
+      return;
+    }
+  }}
+
+  </script>
+</body>
+
+</html>
